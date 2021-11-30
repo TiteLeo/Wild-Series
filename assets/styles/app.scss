@@ -4,9 +4,16 @@
 
   h1{
     color:white;
+    font-family: 'Thasadith', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+
   }
 
 
+  @import url('https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap');
+  @import "~bootstrap/scss/bootstrap"; //le mettre à la fin de ce fichier OBLIGATOIREMENT
 
 
 
@@ -24,4 +31,3 @@
 
 
 
-@import "~bootstrap/scss/bootstrap"; //le mettre à la fin de ce fichier OBLIGATOIREMENT
