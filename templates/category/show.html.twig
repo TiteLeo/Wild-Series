@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}All programs{% endblock %}
+{% block title %}All categories{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries : </h1>
+    <h1>Toutes les categories : </h1>
     {% for program in programs %}
         <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+            <h2>{{ loop.index }} / {{ program.title }} </h2>
             <p>{{ program.summary }}</p>
             {#  Lien vers la fiche de la série : #}
             <a href="{{  path("program_show", { id: program.id }) }}">Voir la fiche</a>
@@ -15,7 +15,7 @@
         Aucune série trouvée.
     {% endfor %}
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
+    <a href="{{ path('category_index') }}">
+        Retour à la categorie
     </a>
 {% endblock %}
