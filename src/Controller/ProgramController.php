@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CategoryType;
+use App\Form\ProgramType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -32,10 +36,33 @@ class ProgramController extends AbstractController
             ['programs' => $programs]
         );
     }
+    /**
+     * The controller for the category add form
+     *
+     * @Route("/new", name="new")
+     */
 
+    public function new(Request $request) : Response
+    {
+        $program = new Program();
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($program);
+            $entityManager->flush();
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->renderForm('program/new.html.twig', [
+            "form" => $form,
+        ]);
+
+    }
 
     /**
-     ** @Route("/{program}/", name="show")
+     ** @Route("/{program}/", name="show", methods="GET", requirements={"id"="\d{1,}"})
      */
     public function show(Program $program): Response
     {
@@ -71,7 +98,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{programId}/seasons/{seasonId}/episode/{episodeId}", name="episode_show")
+     * @Route("/{program}/seasons/{season}/episode/{episode}", name="episode_show")
      */
     public function showEpisode(Program $program, Season $season, Episode $episode)
     {
